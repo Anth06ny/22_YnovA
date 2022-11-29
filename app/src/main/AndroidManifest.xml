@@ -12,9 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.22_YnovA"
         tools:targetApi="31">
-        <activity
-            android:name=".WeatherActivity">
-        </activity>
+
+        <activity android:name=".WeatherActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -29,5 +28,7 @@
                 android:value="" />
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
