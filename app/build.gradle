@@ -30,12 +30,19 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    //Permet de générer une classe pour chaque layout
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
 
+    //Lib requêtes web
     implementation 'com.squareup.okhttp3:okhttp:+'
 
+    //parsing JSON
     implementation 'com.google.code.gson:gson:2.3'
 
     implementation 'androidx.core:core-ktx:1.7.0'
