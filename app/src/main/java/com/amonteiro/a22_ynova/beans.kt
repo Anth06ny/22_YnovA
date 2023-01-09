@@ -90,6 +90,8 @@ data class TempBean(var temp : Double, var temp_min:String, var temp_max:String)
 
 data class DescriptionBean(var description : String, var icon : String)
 
+data class CoordBean(var lat:Double, var long:Double)
+
 /* -------------------------------- */
 // API Pokemon
 /* -------------------------------- */

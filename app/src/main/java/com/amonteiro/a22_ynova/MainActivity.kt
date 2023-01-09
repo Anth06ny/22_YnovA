@@ -13,6 +13,7 @@ import java.util.*
 
 const val MENU_TIME_PICKER = 15
 const val MENU_WEATHER = 16
+const val MENU_WEATHER_AROUND = 17
 
 class MainActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener {
 
@@ -30,7 +31,8 @@ class MainActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener {
         binding.btValidate.setOnClickListener {
             if (binding.rbLike.isChecked) {
                 binding.et.setText(binding.rbLike.text)
-            } else if (binding.rbDislike.isChecked) {
+            }
+            else if (binding.rbDislike.isChecked) {
                 binding.et.setText(binding.rbDislike.text)
             }
             binding.imageView.setImageResource(R.drawable.ic_baseline_flag_24)
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener {
 
         menu.add(0, MENU_TIME_PICKER, 0, "TimePicker")
         menu.add(0, MENU_WEATHER, 0, "Météo")
+        menu.add(0, MENU_WEATHER_AROUND, 0, "Météo alentour")
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -57,8 +60,13 @@ class MainActivity : AppCompatActivity(), TimePickerDialog.OnTimeSetListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == MENU_TIME_PICKER) {
             TimePickerDialog(this, this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
-        } else if (MENU_WEATHER == item.itemId) {
+        }
+        else if (MENU_WEATHER == item.itemId) {
             val intent = Intent(this, WeatherActivity::class.java)
+            startActivity(intent)
+        }
+        else if (MENU_WEATHER_AROUND == item.itemId) {
+            val intent = Intent(this, WeatherAroundActivity::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
