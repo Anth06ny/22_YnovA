@@ -21,40 +21,24 @@ class WeatherAroundActivity : AppCompatActivity() {
 
         //reglage RecyclerView
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 1)
+
+        //Observe
+        model.list.observe(this) {
+            //On lui donne une copie car si on lui donne la liste du model il ne pourra pas faire la comparaison
+            adapter.submitList(it.toList())
+        }
 
         binding.btAdd.setOnClickListener {
-            model.list.add(0, CoordBean(count++, count++))
-            //Version TextView
-            refreshScreen()
-
-            //Version RecyclerView
-            //Creation d'une nouvelle liste car submit List ne s'actualise pas si c'est la même
-            adapter.submitList(model.list.toList())
+            model.loadData()
         }
 
         binding.btDelete.setOnClickListener {
-            //model.list.removeAt(0) provoque indexOutOfBound exception si pas d'element
-            model.list.removeFirstOrNull()
-            refreshScreen()
-
-            adapter.submitList(model.list.toList())
+            model.list.value?.removeFirstOrNull()
+            //On déclenche l'observer avec la même donnée
+            model.list.postValue(model.list.value)
         }
 
-        refreshScreen()
-        adapter.submitList(model.list.toList())
-    }
-
-    fun refreshScreen() {
-        //v1
-        var texte = ""
-        for (coordBean in model.list) {
-            texte += "${coordBean.lat}, ${coordBean.long}\n"
-        }
-        binding.tv.text = texte
-
-        //V2
-        binding.tv.text = model.list.joinToString("\n") { "${it.lat}, ${it.long}" }
     }
 
 }

@@ -6,16 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.amonteiro.a22_ynova.databinding.RowWeatherBinding
+import com.squareup.picasso.Picasso
 
-class WeatherListAdapter : ListAdapter<CoordBean, WeatherListAdapter.ViewHolder>(Comparator()) {
+class WeatherListAdapter : ListAdapter<WeatherBean, WeatherListAdapter.ViewHolder>(Comparator()) {
 
     class ViewHolder(val binding: RowWeatherBinding) : RecyclerView.ViewHolder(binding.root)
 
-    class Comparator : DiffUtil.ItemCallback<CoordBean>() {
+    class Comparator : DiffUtil.ItemCallback<WeatherBean>() {
 
-        override fun areItemsTheSame(oldItem: CoordBean, newItem: CoordBean) = oldItem === newItem
+        override fun areItemsTheSame(oldItem: WeatherBean, newItem: WeatherBean) = oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: CoordBean, newItem: CoordBean) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: WeatherBean, newItem: WeatherBean) = oldItem == newItem
 
     }
 
@@ -23,9 +24,16 @@ class WeatherListAdapter : ListAdapter<CoordBean, WeatherListAdapter.ViewHolder>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(RowWeatherBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = getItem(position)
+        val data = getItem(position)
+        holder.binding.tvville.text = "${data.name}"
+        holder.binding.tvtemp.text = "${data.temperature.temp}° (${data.temperature.temp_min}° / ${data.temperature.temp_max}°)"
 
-        holder.binding.tvville.text = "${currentItem.lat}, ${currentItem.long}"
+        if(data.weather.isNotEmpty()) {
+            Picasso.get().load("https://openweathermap.org/img/wn/${data.weather.get(0).icon}@4x.png").into(holder.binding.imageView)
+        }
+        else {
+            holder.binding.imageView.setImageDrawable(null)
+        }
     }
 
 }

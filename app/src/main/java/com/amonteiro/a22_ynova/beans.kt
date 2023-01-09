@@ -82,7 +82,7 @@ data class StudentBean(val name: String) {
 data class WeatherBean(@SerializedName("main") var temperature : TempBean,
                        var wind:WindBean,
                        var name:String,
-                       var weather : List<DescriptionBean> )
+                       var weather : List<DescriptionBean>, var id:Long )
 
 data class WindBean(var speed : Double)
 
@@ -91,6 +91,8 @@ data class TempBean(var temp : Double, var temp_min:String, var temp_max:String)
 data class DescriptionBean(var description : String, var icon : String)
 
 data class CoordBean(var lat:Double, var long:Double)
+
+data class WeatherAroundResultBean(var list : ArrayList<WeatherBean>)
 
 /* -------------------------------- */
 // API Pokemon
