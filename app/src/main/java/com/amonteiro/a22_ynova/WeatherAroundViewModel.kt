@@ -5,4 +5,6 @@ import androidx.lifecycle.ViewModel
 class WeatherAroundViewModel : ViewModel() {
 
     val list = ArrayList<CoordBean>()
+
+
 }
